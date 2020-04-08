@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   makeStyles,
   Typography,
   Card,
   CardMedia,
-  fade
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     margin: "10px",
     borderRadius: 16,
-    raised: true,
-    borderColor: fade(theme.palette.info.main, 0.5),
     "&:hover": {},
   },
   text: {
@@ -38,8 +35,21 @@ const useStyles = makeStyles((theme) => ({
 
 function CardContent(props) {
   const styles = useStyles();
+
+  const [elevation, setElevation] = useState("6");
+
   return (
-    <Card className={styles.card} variant="outlined">
+    <Card
+      className={styles.card}
+      variant="elevation"
+      elevation={elevation}
+      onMouseEnter={() => {
+        setElevation("20");
+      }}
+      onMouseLeave={() => {
+        setElevation("6");
+      }}
+    >
       <Typography variant="body1" display="block" className={styles.text}>
         {props.textHeader}
       </Typography>

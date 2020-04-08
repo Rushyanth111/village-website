@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
   Typography: {},
   Search: {
     flexGrow: 1,
-    backgroundColor: fade(theme.palette.common.black, 0.1),
-    "&:hover": { backgroundColor: fade(theme.palette.common.white, 0.3) },
+    backgroundColor: fade(theme.palette.common.black, 0.07),
     borderRadius: 10,
     maxWidth: "30%",
     position: "relative",
