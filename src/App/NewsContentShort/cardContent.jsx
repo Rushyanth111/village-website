@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import {
-  Box,
-  makeStyles,
-  Typography,
-  Card,
-  CardMedia,
-} from "@material-ui/core";
+import PropTypes from "prop-types";
+import { makeStyles, Typography, Card, CardMedia } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   card: {
     display: "flex",
     flexDirection: "row",
@@ -15,20 +10,17 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     margin: "10px",
     borderRadius: 16,
-    "&:hover": {},
   },
   text: {
+    flex: 1,
     padding: "10px",
-    margin: "2px",
     alignItems: "left",
     fontWeight: 500,
   },
   image: {
     alignSelf: "right",
-    minWidth: "100px",
-    minHeight: "100px",
-    maxWidth: "100px",
-    maxHeight: "100px",
+    width: 100,
+    height: 100,
     borderRadius: 16,
   },
 }));
@@ -36,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 function CardContent(props) {
   const styles = useStyles();
 
-  const [elevation, setElevation] = useState("6");
+  const [elevation, setElevation] = useState(6);
 
   return (
     <Card
@@ -44,10 +36,10 @@ function CardContent(props) {
       variant="elevation"
       elevation={elevation}
       onMouseEnter={() => {
-        setElevation("20");
+        setElevation(20);
       }}
       onMouseLeave={() => {
-        setElevation("6");
+        setElevation(6);
       }}
     >
       <Typography variant="body1" display="block" className={styles.text}>
@@ -60,5 +52,9 @@ function CardContent(props) {
     </Card>
   );
 }
+
+CardContent.propTypes = {
+  textHeader: PropTypes.string,
+};
 
 export default CardContent;

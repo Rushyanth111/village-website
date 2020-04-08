@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   AppBar,
   IconButton,
@@ -15,44 +15,58 @@ import SearchIcon from "@material-ui/icons/Search";
 const useStyles = makeStyles((theme) => ({
   AppBar: {
     backgroundColor: "white",
+    width:'100%'
   },
-  Menu: {},
-  Typography: {},
-  Search: {
-    flexGrow: 1,
+  Toolbar: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  MenuAndTypography: {
+    flex: 1
+  },
+  Spacer: {
+    flex: 1,
+    [theme.breakpoints.down('md')]:{
+      display:"none"
+    }
+  },
+  SearchBox: {
+    flex: 1.5,
+    display: "flex",
     backgroundColor: fade(theme.palette.common.black, 0.07),
     borderRadius: 10,
-    maxWidth: "30%",
-    position: "relative",
-    marginLeft: "auto",
-    marginRight: "auto",
+    width: "100%",
+    [theme.breakpoints.down('md')]:{
+      display:"none"
+    }
+  },
+  SearchInput: {
+    flex: 1
   },
 }));
 
 function NavigationAppBar() {
   const styles = useStyles();
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth > 480);
-
-  const handleWindowResize = () => {
-    setIsMobile(window.innerWidth > 480);
-  };
-
-  window.addEventListener("resize", handleWindowResize);
-
   return (
     <AppBar position="sticky" color="default" className={styles.AppBar}>
-      <Toolbar>
-        <IconButton edge="start">
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6">Government Schemes</Typography>
-        <Box className={styles.Search} hidden={!isMobile}>
+      <Toolbar className={styles.Toolbar}>
+        <Box className={styles.MenuAndTypography}>
+          <IconButton edge="start">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" display="inline">
+            Government Schemes
+          </Typography>
+        </Box>
+        <Box className={styles.SearchBox}>
           <IconButton>
             <SearchIcon />
           </IconButton>
-          <InputBase placeholder="Search..." />
+          <InputBase placeholder="Search..." className={styles.SearchInput} />
         </Box>
+        <Box className={styles.Spacer}></Box>
       </Toolbar>
     </AppBar>
   );

@@ -1,29 +1,17 @@
 import React from "react";
 import { makeStyles, Box } from "@material-ui/core";
 import CardContent from "./cardContent";
-import { LoremIpsum } from "lorem-ipsum";
-
-// const LoremIpsum = require("lorem-ipsum").LoremIpsum;
-
-const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4,
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4,
-  },
-});
-
-const useStyles = makeStyles((theme) => ({
+const lorem = require('../lorem')
+const useStyles = makeStyles(() => ({
   MainBox: {
-    marginLeft: "25%",
-    marginRight: "25%",
-    [theme.breakpoints.down("md")]: {
-      marginLeft: "5%",
-      marginRight: "5%",
-    },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  InnerBox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
   },
 }));
 
@@ -36,7 +24,11 @@ function NewsContentShort() {
       <CardContent key={i} textHeader={lorem.generateSentences(1)} />
     );
   }
-  return <Box className={styles.MainBox}>{CardContents}</Box>;
+  return (
+    <Box className={styles.MainBox}>
+      <Box className={styles.InnerBox}>{CardContents}</Box>
+    </Box>
+  );
 }
 
 export default NewsContentShort;
