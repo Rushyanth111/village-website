@@ -1,14 +1,7 @@
-import React from "react";
-import {
-  Box,
-  makeStyles,
-  Card,
-  CardHeader,
-  CardContent,
-  CardMedia,
-} from "@material-ui/core";
+import { Box, Card, makeStyles } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 
-import lorem from "../lorem";
+import ProcessLongComponent from "./ProcessContent";
 
 const useStyles = makeStyles((theme) => ({
   OuterBox: {
@@ -16,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    padding: '5%'
+    padding: "5%",
   },
   CardBox: {
     display: "flex",
@@ -36,17 +29,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NewsContentLong() {
+  const [data, setData] = useState({});
+  const [isDataFetched, setIsDataFetched] = useState(false);
+  async function fetchSomeData() {
+    var resp = await fetch("https://api.rxav.pw/village/content", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        schemeId: "2",
+      }),
+    });
+    resp = await resp.json(resp);
+
+    setData(resp);
+    setIsDataFetched(true);
+  }
+
+  useEffect(() => {
+    fetchSomeData();
+    console.log("I HAVE RUN")
+  }, []);
   const styles = useStyles();
   return (
     <Box className={styles.OuterBox}>
       <Card className={styles.CardBox}>
-        <CardMedia
-          className={styles.CardImage}
-          image="https://picsum.photos/200/200"
-        />
-        <CardHeader title={lorem.generateSentences(1)} />
-
-        <CardContent>{lorem.generateParagraphs(1)}</CardContent>
+        {isDataFetched && <ProcessLongComponent jsonData={data} />}
       </Card>
     </Box>
   );
