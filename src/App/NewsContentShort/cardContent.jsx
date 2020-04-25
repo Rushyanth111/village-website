@@ -1,6 +1,10 @@
+import { Card, Typography, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
+import { setIsSchemeSelected, setScheme } from "../Redux";
+
 import PropTypes from "prop-types";
-import { makeStyles, Typography, Card, CardMedia } from "@material-ui/core";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -25,10 +29,22 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function CardContent(props) {
+function CardContent({
+  textHeader,
+  imageData,
+  schemeId,
+  setScheme,
+  setIsSchemeSelected,
+}) {
   const styles = useStyles();
-
+  const history = useHistory();
   const [elevation, setElevation] = useState(6);
+
+  function onClickHandler() {
+    setIsSchemeSelected(true);
+    setScheme(schemeId);
+    history.push('/schemeDetails')
+  }
 
   return (
     <Card
@@ -41,13 +57,14 @@ function CardContent(props) {
       onMouseLeave={() => {
         setElevation(6);
       }}
+      onClick={onClickHandler}
     >
       <Typography variant="body1" display="block" className={styles.text}>
-        {props.textHeader}
+        {textHeader}
       </Typography>
-      <CardMedia
+      <img
         className={styles.image}
-        image="https://picsum.photos/200/200"
+        src={`data:image/png;base64,${imageData}`}
       />
     </Card>
   );
@@ -55,6 +72,18 @@ function CardContent(props) {
 
 CardContent.propTypes = {
   textHeader: PropTypes.string,
+  imageData: PropTypes.string,
+  schemeId: PropTypes.number,
+  setScheme: PropTypes.func,
+  setIsSchemeSelected: PropTypes.func,
 };
 
-export default CardContent;
+function mapDispatchToProps(dispatch) {
+  return {
+    setScheme: (schemeValue) => dispatch(setScheme(schemeValue)),
+    setIsSchemeSelected: (isSchemeSelected) =>
+      dispatch(setIsSchemeSelected(isSchemeSelected)),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(CardContent);

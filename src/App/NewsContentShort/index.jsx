@@ -1,7 +1,11 @@
-import React from "react";
-import { makeStyles, Box } from "@material-ui/core";
+import { Box, Container, makeStyles } from "@material-ui/core";
+
+import AppBar from "../AppBar";
 import CardContent from "./cardContent";
-const lorem = require('../lorem')
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+
 const useStyles = makeStyles(() => ({
   MainBox: {
     display: "flex",
@@ -17,17 +21,43 @@ const useStyles = makeStyles(() => ({
 
 function NewsContentShort() {
   const styles = useStyles();
-  let CardContents = [];
+  const [data, setData] = useState([]);
+  const [isDataFetched, setIsDataFetched] = useState(false);
+  async function fetchData() {
+    var resp = await fetch("https://api.rxav.pw/village/list", {
+      mode: "cors",
+    });
 
-  for (let i = 0; i < 10; i++) {
-    CardContents.push(
-      <CardContent key={i} textHeader={lorem.generateSentences(1)} />
-    );
+    resp = await resp.json();
+
+    setData(resp);
+    setIsDataFetched(true);
   }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <Box className={styles.MainBox}>
-      <Box className={styles.InnerBox}>{CardContents}</Box>
-    </Box>
+    <>
+      <AppBar />
+      <Box className={styles.MainBox}>
+        <Box className={styles.InnerBox}>
+          {isDataFetched && (
+            <Container>
+              {data.map((val, index) => (
+                <CardContent
+                  textHeader={val["title"]}
+                  imageData={val["image"]}
+                  key={index}
+                  schemeId={val["schemeid"]}
+                />
+              ))}
+            </Container>
+          )}
+        </Box>
+      </Box>
+    </>
   );
 }
 

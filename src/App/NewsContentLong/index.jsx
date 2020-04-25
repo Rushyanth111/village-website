@@ -1,7 +1,10 @@
 import { Box, Card, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
+import AppBar from "../AppBar";
 import ProcessLongComponent from "./ProcessContent";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   OuterBox: {
@@ -28,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewsContentLong() {
+function NewsContentLong({ schemeSelected }) {
   const [data, setData] = useState({});
   const [isDataFetched, setIsDataFetched] = useState(false);
   async function fetchSomeData() {
@@ -39,7 +42,7 @@ function NewsContentLong() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        schemeId: "2",
+        schemeId: `${schemeSelected}`,
       }),
     });
     resp = await resp.json(resp);
@@ -50,16 +53,28 @@ function NewsContentLong() {
 
   useEffect(() => {
     fetchSomeData();
-    console.log("I HAVE RUN")
   }, []);
   const styles = useStyles();
   return (
-    <Box className={styles.OuterBox}>
-      <Card className={styles.CardBox}>
-        {isDataFetched && <ProcessLongComponent jsonData={data} />}
-      </Card>
-    </Box>
+    <>
+      <AppBar />
+      <Box className={styles.OuterBox}>
+        <Card className={styles.CardBox}>
+          {isDataFetched && <ProcessLongComponent jsonData={data} />}
+        </Card>
+      </Box>
+    </>
   );
 }
 
-export default NewsContentLong;
+NewsContentLong.propTypes = {
+  schemeSelected: PropTypes.number,
+};
+
+function mapStateToProps(state) {
+  return {
+    schemeSelected: state.selectedSchemeId,
+  };
+}
+
+export default connect(mapStateToProps)(NewsContentLong);

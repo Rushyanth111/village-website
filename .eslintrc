@@ -17,5 +17,9 @@
         "node":true,
         "es6": true,
         "browser": true
+    },
+    "rules": {
+        "react-redux/mapDispatchToProps-prefer-shorthand":"off",
+        "react-redux/prefer-separate-component-file":"off"
     }
 }

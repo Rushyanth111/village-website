@@ -1,15 +1,24 @@
-import React from "react";
-import { Box } from "@material-ui/core";
-import NavigationAppBar from "./AppBar";
-//import NewsContentShort from "./NewsContentShort";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 import NewsContentLong from "./NewsContentLong";
-function App() {
+import NewsContentShort from "./NewsContentShort";
+import { Provider } from "react-redux";
+import React from "react";
+import { createStore } from "redux";
+import {rootReducer} from "./Redux";
+
+function MainApp() {
+  const store = createStore(rootReducer);
   return (
-    <Box>
-      <NavigationAppBar />
-      <NewsContentLong />
-    </Box>
+    <BrowserRouter>
+      <Provider store={store}>
+        <Switch>
+          <Route path="/" exact component={NewsContentShort} />
+          <Route path="/schemeDetails" exact component={NewsContentLong} />
+        </Switch>
+      </Provider>
+    </BrowserRouter>
   );
 }
 
-export default App;
+export default MainApp;
