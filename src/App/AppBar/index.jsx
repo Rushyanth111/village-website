@@ -1,21 +1,25 @@
-import React from "react";
 import {
   AppBar,
+  Box,
   IconButton,
+  InputBase,
   Toolbar,
   Typography,
-  InputBase,
-  makeStyles,
   fade,
-  Box,
+  makeStyles,
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+
+import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
+import PropTypes from "prop-types";
+import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   AppBar: {
     backgroundColor: "white",
-    width:'100%'
+    width: "100%",
   },
   Toolbar: {
     display: "flex",
@@ -23,13 +27,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   MenuAndTypography: {
-    flex: 1
+    flex: 1,
+    display: "flex",
+    alignItems: "center",
   },
   Spacer: {
     flex: 1,
-    [theme.breakpoints.down('md')]:{
-      display:"none"
-    }
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
   SearchBox: {
     flex: 1.5,
@@ -37,24 +43,31 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: fade(theme.palette.common.black, 0.07),
     borderRadius: 10,
     width: "100%",
-    [theme.breakpoints.down('md')]:{
-      display:"none"
-    }
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
   SearchInput: {
-    flex: 1
+    flex: 1,
   },
 }));
 
-function NavigationAppBar() {
+function NavigationAppBar({ isSchemeSelected }) {
   const styles = useStyles();
+  const history = useHistory();
+
+  function onClickHandler() {
+    if (isSchemeSelected) {
+      history.goBack();
+    }
+  }
 
   return (
     <AppBar position="sticky" color="default" className={styles.AppBar}>
       <Toolbar className={styles.Toolbar}>
         <Box className={styles.MenuAndTypography}>
-          <IconButton edge="start">
-            <MenuIcon />
+          <IconButton edge="start" onClick={onClickHandler}>
+            <ArrowBackTwoToneIcon />
           </IconButton>
           <Typography variant="h6" display="inline">
             Government Schemes
@@ -72,4 +85,14 @@ function NavigationAppBar() {
   );
 }
 
-export default NavigationAppBar;
+NavigationAppBar.propTypes = {
+  isSchemeSelected: PropTypes.bool,
+};
+
+function mapStateToProps(state) {
+  return {
+    isSchemeSelected: state.isSchemeSelected,
+  };
+}
+
+export default connect(mapStateToProps)(NavigationAppBar);
