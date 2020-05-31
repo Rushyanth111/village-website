@@ -11,4 +11,11 @@ function setIsSchemeSelected(isSchemeSelected) {
   };
 }
 
-export { setScheme, setIsSchemeSelected };
+function setSearchKeyword(searchKeyword) {
+  return {
+    type: "SET_SEARCH_KEYWORD",
+    value: searchKeyword,
+  };
+}
+
+export { setScheme, setIsSchemeSelected, setSearchKeyword };

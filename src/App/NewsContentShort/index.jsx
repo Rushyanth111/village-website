@@ -2,6 +2,7 @@ import { Box, Container, makeStyles } from "@material-ui/core";
 
 import AppBar from "../AppBar";
 import CardContent from "./cardContent";
+import PropTypes from "prop-types";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -24,7 +25,7 @@ function NewsContentShort() {
   const [data, setData] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
   async function fetchData() {
-    var resp = await fetch("https://api.rxav.pw/village/list", {
+    var resp = await fetch("http://localhost:5000/list", {
       mode: "cors",
     });
 

@@ -37,7 +37,7 @@ function NewsContentLong({ schemeSelected, isSchemeSelected }) {
   const [data, setData] = useState({});
   const [isDataFetched, setIsDataFetched] = useState(false);
   async function fetchSomeData() {
-    var resp = await fetch("https://api.rxav.pw/village/content", {
+    var resp = await fetch("http://localhost:5000/content", {
       method: "POST",
       mode: "cors",
       headers: {

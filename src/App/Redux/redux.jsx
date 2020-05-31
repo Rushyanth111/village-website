@@ -1,6 +1,7 @@
 const initialState = {
   isSchemeSelected: false,
   selectedSchemeId: 0,
+  searchKeyword: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -12,6 +13,10 @@ function rootReducer(state = initialState, action) {
     case "SET_IS_SCHEME_SELECTED":
       return Object.assign({}, state, {
         isSchemeSelected: action.value,
+      });
+    case "SET_SEARCH_KEYWORD":
+      return Object.assign({}, state, {
+        searchKeyword: action.value,
       });
     default:
       return state;

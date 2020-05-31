@@ -57,11 +57,11 @@ function ProcessLongComponent({ jsonData }) {
           />
         );
         initialTitleSet = true;
-      } else if (dkey.endsWith("title")) {
+      } else if (dkey.startsWith("title")) {
         componentSection.push(
           <CardHeader title={val.slice(val.indexOf(" "))} key={keyno++} />
         );
-      } else if (dkey.endsWith("image")) {
+      } else if (dkey.startsWith("image")) {
         componentSection.push(
           <CardMedia
             className={style.CardImage}
@@ -69,19 +69,19 @@ function ProcessLongComponent({ jsonData }) {
             key={keyno++}
           />
         );
-      } else if (dkey.endsWith("listElement")) {
+      } else if (dkey.startsWith("listElement")) {
         componentSection.push(
           <Typography key={keyno++} component={"span"}>
             <ReactMarkdown source={val} />
           </Typography>
         );
-      } else if (dkey.endsWith("normal")) {
+      } else if (dkey.startsWith("normal")) {
         componentSection.push(
           <Typography key={keyno++} component={"span"}>
             <ReactMarkdown source={val} />
           </Typography>
         );
-      } else if (dkey.endsWith("table")) {
+      } else if (dkey.startsWith("table")) {
         const table = [];
         for (var i = 0; i < val["rows"]; i++) {
           table.push(<TableCell key={keyno++}>{val["data"][i]}</TableCell>);
@@ -92,7 +92,7 @@ function ProcessLongComponent({ jsonData }) {
           </Table>
         );
       } else {
-        console.log("Doing nothing!");
+        continue;
       }
     }
 

@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
+import { setSearchKeyword } from "../Redux";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavigationAppBar({ isSchemeSelected }) {
+function NavigationAppBar({ isSchemeSelected, searchKeyword }) {
   const styles = useStyles();
   const history = useHistory();
 
@@ -60,6 +61,11 @@ function NavigationAppBar({ isSchemeSelected }) {
     if (isSchemeSelected) {
       history.goBack();
     }
+  }
+
+  function onSearchHandler(event) {
+    console.log(event.target.value);
+    searchKeyword(event.target.value);
   }
 
   return (
@@ -77,7 +83,11 @@ function NavigationAppBar({ isSchemeSelected }) {
           <IconButton>
             <SearchIcon />
           </IconButton>
-          <InputBase placeholder="Search..." className={styles.SearchInput} />
+          <InputBase
+            placeholder="Search..."
+            className={styles.SearchInput}
+            onInput={onSearchHandler}
+          />
         </Box>
         <Box className={styles.Spacer}></Box>
       </Toolbar>
@@ -87,12 +97,20 @@ function NavigationAppBar({ isSchemeSelected }) {
 
 NavigationAppBar.propTypes = {
   isSchemeSelected: PropTypes.bool,
+  searchKeyword: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
     isSchemeSelected: state.isSchemeSelected,
+    searchKeyword: state.searchKeyword,
   };
 }
 
-export default connect(mapStateToProps)(NavigationAppBar);
+function mapDispatchToProps(dispatch) {
+  return {
+    searchKeyword: (keyword) => dispatch(setSearchKeyword(keyword)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationAppBar);
