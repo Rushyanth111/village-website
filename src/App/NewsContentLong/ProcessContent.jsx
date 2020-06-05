@@ -57,31 +57,31 @@ function ProcessLongComponent({ jsonData }) {
           />
         );
         initialTitleSet = true;
-      } else if (dkey.startsWith("title")) {
+      } else if (dkey.endsWith("title")) {
         componentSection.push(
           <CardHeader title={val.slice(val.indexOf(" "))} key={keyno++} />
         );
-      } else if (dkey.startsWith("image")) {
+      } else if (dkey.endsWith("image")) {
         componentSection.push(
           <CardMedia
             className={style.CardImage}
-            image={val["link"]}
+            image={`data:image/jpeg;base64,${val["encoded_image"]}`}
             key={keyno++}
           />
         );
-      } else if (dkey.startsWith("listElement")) {
+      } else if (dkey.endsWith("listElement")) {
         componentSection.push(
           <Typography key={keyno++} component={"span"}>
             <ReactMarkdown source={val} />
           </Typography>
         );
-      } else if (dkey.startsWith("normal")) {
+      } else if (dkey.endsWith("normal")) {
         componentSection.push(
           <Typography key={keyno++} component={"span"}>
             <ReactMarkdown source={val} />
           </Typography>
         );
-      } else if (dkey.startsWith("table")) {
+      } else if (dkey.endsWith("table")) {
         const table = [];
         for (var i = 0; i < val["rows"]; i++) {
           table.push(<TableCell key={keyno++}>{val["data"][i]}</TableCell>);

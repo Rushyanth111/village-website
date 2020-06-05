@@ -1,9 +1,11 @@
-import { Box, Container, makeStyles } from "@material-ui/core";
+import { Box, Button, CircularProgress, Container, makeStyles } from "@material-ui/core";
 
 import AppBar from "../AppBar";
 import CardContent from "./cardContent";
 import PropTypes from "prop-types";
 import React from "react";
+import { connect } from "react-redux";
+import url from "../../constants";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -18,16 +20,31 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     alignItems: "stretch",
   },
+  Button: {
+    flex: 1,
+    padding: "10px",
+    margin: "10px",
+    borderRadius: 16,
+  },
 }));
 
-function NewsContentShort() {
+function NewsContentShort({ searchKeyword }) {
   const styles = useStyles();
   const [data, setData] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
-  async function fetchData() {
-    var resp = await fetch("http://localhost:5000/list", {
-      mode: "cors",
-    });
+  const [range, setRange] = useState(5);
+  async function fetchData(searchKeyword, range) {
+    setIsDataFetched(false);
+    var resp;
+    if (searchKeyword === undefined || searchKeyword === "") {
+      resp = await fetch(url + `list?range=${0}-${range}`, {
+        mode: "cors",
+      });
+    } else {
+      resp = await fetch(url + `search?phrase=${searchKeyword}`, {
+        mode: "cors",
+      });
+    }
 
     resp = await resp.json();
 
@@ -35,31 +52,47 @@ function NewsContentShort() {
     setIsDataFetched(true);
   }
 
+  function handleLoadMore(){
+    setRange(range+5);
+  }
+
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(searchKeyword, range);
+  }, [searchKeyword, range]);
 
   return (
     <>
       <AppBar />
       <Box className={styles.MainBox}>
         <Box className={styles.InnerBox}>
-          {isDataFetched && (
+          {!isDataFetched ? <CircularProgress/>: (
             <Container>
               {data.map((val, index) => (
                 <CardContent
                   textHeader={val["title"]}
-                  imageData={val["image"]}
+                  imageData={val["encoded_image"]}
                   key={index}
                   schemeId={val["schemeid"]}
                 />
               ))}
             </Container>
           )}
+          <Button className={styles.Button} onClick={handleLoadMore}>Load More</Button>
         </Box>
       </Box>
     </>
   );
 }
 
-export default NewsContentShort;
+function mapStateToProps(state) {
+  return {
+    searchKeyword: state.searchKeyword,
+  };
+}
+
+NewsContentShort.propTypes = {
+  searchKeyword: PropTypes.string,
+};
+
+export default connect(mapStateToProps)(NewsContentShort);

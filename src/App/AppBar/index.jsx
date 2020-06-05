@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 function NavigationAppBar({ isSchemeSelected, searchKeyword }) {
   const styles = useStyles();
   const history = useHistory();
-
+  var searchTimer = 0;
   function onClickHandler() {
     if (isSchemeSelected) {
       history.goBack();
@@ -64,8 +64,13 @@ function NavigationAppBar({ isSchemeSelected, searchKeyword }) {
   }
 
   function onSearchHandler(event) {
-    console.log(event.target.value);
-    searchKeyword(event.target.value);
+    var e = event.target.value
+
+    clearTimeout(searchTimer)
+
+    searchTimer = setTimeout(() => {
+      searchKeyword(e);
+    }, 1000);
   }
 
   return (
@@ -97,7 +102,7 @@ function NavigationAppBar({ isSchemeSelected, searchKeyword }) {
 
 NavigationAppBar.propTypes = {
   isSchemeSelected: PropTypes.bool,
-  searchKeyword: PropTypes.func
+  searchKeyword: PropTypes.func,
 };
 
 function mapStateToProps(state) {

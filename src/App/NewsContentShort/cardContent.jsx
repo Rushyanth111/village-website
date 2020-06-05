@@ -52,55 +52,28 @@ function CardContent({
     setNullKeywordSearch();
   }
 
-  //Get All Search Keywords First:
-  const [isPresent, setisPresent] = useState(true);
-
-  useEffect(() => {
-    if (searchKeyword.length > 0) {
-      const keywords = searchKeyword.split(" ");
-
-      for (let i = 0; i < keywords.length; i++) {
-        if (textHeader.indexOf(keywords[i]) > 0) {
-          setisPresent(true);
-          return;
-        }
-      }
-
-      setisPresent(false);
-    } else if (searchKeyword.length == 0) {
-      setisPresent(true);
-    } else {
-      setisPresent(false);
-    }
-
-    console.log(isPresent);
-  }, [searchKeyword]);
-
   return (
-    <React.Fragment>
-      {isPresent == true ? (
-        <Card
-          className={styles.card}
-          variant="elevation"
-          elevation={elevation}
-          onMouseEnter={() => {
-            setElevation(20);
-          }}
-          onMouseLeave={() => {
-            setElevation(6);
-          }}
-          onClick={onClickHandler}
-        >
-          <Typography variant="body1" display="block" className={styles.text}>
-            {textHeader}
-          </Typography>
-          <img
-            className={styles.image}
-            src={`data:image/png;base64,${imageData}`}
-          />
-        </Card>
-      ) : null}
-    </React.Fragment>
+    <Card
+      className={styles.card}
+      variant="elevation"
+      elevation={elevation}
+      onMouseEnter={() => {
+        setElevation(20);
+      }}
+      onMouseLeave={() => {
+        setElevation(6);
+      }}
+      onClick={onClickHandler}
+    >
+      <Typography variant="body1" display="block" className={styles.text}>
+        {textHeader.replace("# ", "")}
+      </Typography>
+      <img
+        className={styles.image}
+        src={`data:image/jpeg;base64,${imageData}`}
+        alt=""
+      />
+    </Card>
   );
 }
 
