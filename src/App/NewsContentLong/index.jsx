@@ -38,7 +38,7 @@ function NewsContentLong({ schemeSelected, isSchemeSelected }) {
   const [data, setData] = useState({});
   const [isDataFetched, setIsDataFetched] = useState(false);
   async function fetchSomeData() {
-    var resp = await fetch(url + "/content", {
+    var resp = await fetch(url + "content", {
       method: "POST",
       mode: "cors",
       headers: {

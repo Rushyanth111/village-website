@@ -5,6 +5,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableRow,
   Typography,
   makeStyles,
 } from "@material-ui/core";
@@ -83,9 +84,17 @@ function ProcessLongComponent({ jsonData }) {
         );
       } else if (dkey.endsWith("table")) {
         const table = [];
-        for (var i = 0; i < val["rows"]; i++) {
-          table.push(<TableCell key={keyno++}>{val["data"][i]}</TableCell>);
-        }
+        val["data"].forEach((row) => {
+          let rowData = [];
+          row.forEach((cell) => {
+            rowData.push(
+              <TableCell>
+                <ReactMarkdown source={cell} />
+              </TableCell>
+            );
+          });
+          table.push(<TableRow>{rowData}</TableRow>);
+        });
         componentSection.push(
           <Table key={keyno++}>
             <TableBody>{table}</TableBody>
