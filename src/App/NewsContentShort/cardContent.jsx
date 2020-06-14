@@ -1,5 +1,5 @@
 import { Card, Typography, makeStyles } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { setIsSchemeSelected, setScheme, setSearchKeyword } from "../Redux";
 
 import PropTypes from "prop-types";
@@ -39,7 +39,6 @@ function CardContent({
   schemeId,
   setScheme,
   setIsSchemeSelected,
-  searchKeyword,
   setNullKeywordSearch,
 }) {
   const styles = useStyles();
@@ -84,15 +83,8 @@ CardContent.propTypes = {
   schemeId: PropTypes.number,
   setScheme: PropTypes.func,
   setIsSchemeSelected: PropTypes.func,
-  searchKeyword: PropTypes.string,
   setNullKeywordSearch: PropTypes.func,
 };
-
-function mapStateToProps(state) {
-  return {
-    searchKeyword: state.searchKeyword,
-  };
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -103,4 +95,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardContent);
+export default connect(null, mapDispatchToProps)(CardContent);

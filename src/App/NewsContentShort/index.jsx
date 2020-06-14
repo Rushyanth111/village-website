@@ -81,9 +81,11 @@ function NewsContentShort({ searchKeyword }) {
                 schemeId={val["schemeid"]}
               />
             ))}
-            <Button className={styles.Button} onClick={handleLoadMore}>
-              Load More
-            </Button>
+            {(searchKeyword === undefined || searchKeyword === "") && (
+              <Button className={styles.Button} onClick={handleLoadMore}>
+                Load More
+              </Button>
+            )}
           </Container>
         )}
       </Box>

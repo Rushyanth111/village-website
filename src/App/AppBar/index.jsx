@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
   Spacer: {
     flex: 1,
@@ -45,9 +48,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: fade(theme.palette.common.black, 0.07),
     borderRadius: 10,
     width: "100%",
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
   },
   SearchInput: {
     flex: 1,
@@ -109,6 +109,7 @@ function NavigationAppBar({
 NavigationAppBar.propTypes = {
   isSchemeSelected: PropTypes.bool,
   searchKeyword: PropTypes.func,
+  setIsSchemeSelected: PropTypes.func,
 };
 
 function mapStateToProps(state) {

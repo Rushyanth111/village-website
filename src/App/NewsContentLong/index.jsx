@@ -6,7 +6,6 @@ import ProcessLongComponent from "./ProcessContent";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import url from "../../constants";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   OuterBox: {
@@ -33,33 +32,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewsContentLong({ schemeSelected, isSchemeSelected }) {
-  const history = useHistory();
+function NewsContentLong({ schemeSelected }) {
   const [data, setData] = useState({});
   const [isDataFetched, setIsDataFetched] = useState(false);
-  async function fetchSomeData() {
-    var resp = await fetch(url + "content", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        schemeId: `${schemeSelected}`,
-      }),
-    });
-    resp = await resp.json(resp);
-    setData(resp);
-    setIsDataFetched(true);
-  }
-
-  if (!isSchemeSelected) {
-    history.push("/");
-  }
 
   useEffect(() => {
+    setIsDataFetched(false);
+    async function fetchSomeData() {
+      var resp = await fetch(url + "content", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          schemeId: `${schemeSelected}`,
+        }),
+      });
+      resp = await resp.json(resp);
+      setData(resp);
+    }
+    setIsDataFetched(true);
     fetchSomeData();
-  }, []);
+  }, [schemeSelected]);
   const styles = useStyles();
   return (
     <React.Fragment>
@@ -76,13 +71,11 @@ function NewsContentLong({ schemeSelected, isSchemeSelected }) {
 
 NewsContentLong.propTypes = {
   schemeSelected: PropTypes.number,
-  isSchemeSelected: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
     schemeSelected: state.selectedSchemeId,
-    isSchemeSelected: state.isSchemeSelected,
   };
 }
 

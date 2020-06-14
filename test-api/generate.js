@@ -33,11 +33,11 @@ server.get("/list", (request, response) => {
 server.get("/search", (request, response) => {
   let resObjects = new Array();
 
-  for (let i = parseInt(length[0]); i < parseInt(length[1]); i++) {
+  for (let i = 0; i < 10; i++) {
     resObjects.push({
       title: faker.lorem.lines(2),
       encoded_image: imageDataSample,
-      schemeId: parseInt(i),
+      schemeId: i,
     });
   }
   setTimeout(() => {
@@ -75,7 +75,7 @@ server.post("/content", (request, response) => {
       data.push(tempArray);
     }
 
-    intermediate[`001-table`] = {
+    intermediate[`00${i}-table`] = {
       row: 10,
       column: 6,
       data: data,
