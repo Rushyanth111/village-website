@@ -3,7 +3,6 @@ import {
   CardHeader,
   CardMedia,
   Container,
-  StylesProvider,
   Table,
   TableBody,
   TableCell,
