@@ -1,7 +1,9 @@
 import {
+  Box,
   CardHeader,
   CardMedia,
   Container,
+  StylesProvider,
   Table,
   TableBody,
   TableCell,
@@ -36,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
   CardContent: {
     display: "flex",
+  },
+  TableContainer: {
+    overflowX: "auto",
   },
 }));
 
@@ -102,9 +107,11 @@ function ProcessLongComponent({ jsonData }) {
           );
         });
         componentSection.push(
-          <Table key={keyno++} overflow="auto">
-            <TableBody>{table}</TableBody>
-          </Table>
+          <Box className={style.TableContainer}>
+            <Table key={keyno++} overflow="auto">
+              <TableBody>{table}</TableBody>
+            </Table>
+          </Box>
         );
       } else {
         continue;
