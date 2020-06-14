@@ -1,6 +1,5 @@
 const faker = require("faker");
 const jsonserver = require("json-server");
-const { image, fake } = require("faker");
 const middlewares = jsonserver.defaults();
 
 const server = jsonserver.create();
