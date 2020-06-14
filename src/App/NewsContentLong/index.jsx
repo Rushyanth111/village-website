@@ -5,7 +5,7 @@ import AppBar from "../AppBar";
 import ProcessLongComponent from "./ProcessContent";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import url from "../../constants"
+import url from "../../constants";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

@@ -84,19 +84,25 @@ function ProcessLongComponent({ jsonData }) {
         );
       } else if (dkey.endsWith("table")) {
         const table = [];
-        val["data"].forEach((row) => {
+        const number = dkey.split("-")[0];
+        val["data"].forEach((row, outerindex) => {
           let rowData = [];
-          row.forEach((cell) => {
+          row.forEach((cell, index) => {
             rowData.push(
               <TableCell>
-                <ReactMarkdown source={cell} />
+                <ReactMarkdown
+                  source={cell}
+                  key={`cell-${number}-${outerindex}-${index}`}
+                />
               </TableCell>
             );
           });
-          table.push(<TableRow>{rowData}</TableRow>);
+          table.push(
+            <TableRow key={`row-${number}-${outerindex}`}>{rowData}</TableRow>
+          );
         });
         componentSection.push(
-          <Table key={keyno++}>
+          <Table key={keyno++} overflow="auto">
             <TableBody>{table}</TableBody>
           </Table>
         );

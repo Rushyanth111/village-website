@@ -8,13 +8,14 @@ import {
   fade,
   makeStyles,
 } from "@material-ui/core";
+import { setIsSchemeSelected, setSearchKeyword } from "../Redux";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
+import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
 import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
-import { setSearchKeyword } from "../Redux";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,20 +54,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavigationAppBar({ isSchemeSelected, searchKeyword }) {
+function NavigationAppBar({
+  isSchemeSelected,
+  searchKeyword,
+  setIsSchemeSelected,
+}) {
   const styles = useStyles();
   const history = useHistory();
   var searchTimer = 0;
   function onClickHandler() {
     if (isSchemeSelected) {
+      setIsSchemeSelected(false);
       history.goBack();
     }
   }
 
   function onSearchHandler(event) {
-    var e = event.target.value
+    var e = event.target.value;
 
-    clearTimeout(searchTimer)
+    clearTimeout(searchTimer);
 
     searchTimer = setTimeout(() => {
       searchKeyword(e);
@@ -78,7 +84,7 @@ function NavigationAppBar({ isSchemeSelected, searchKeyword }) {
       <Toolbar className={styles.Toolbar}>
         <Box className={styles.MenuAndTypography}>
           <IconButton edge="start" onClick={onClickHandler}>
-            <ArrowBackTwoToneIcon />
+            {isSchemeSelected ? <ArrowBackTwoToneIcon /> : <MenuIcon />}
           </IconButton>
           <Typography variant="h6" display="inline">
             Government Schemes
@@ -115,6 +121,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     searchKeyword: (keyword) => dispatch(setSearchKeyword(keyword)),
+    setIsSchemeSelected: (val) => dispatch(setIsSchemeSelected(val)),
   };
 }
 

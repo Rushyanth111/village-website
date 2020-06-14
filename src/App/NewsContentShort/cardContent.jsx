@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   card: {
+    flex: 1,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",

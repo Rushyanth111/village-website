@@ -1,4 +1,10 @@
-import { Box, Button, CircularProgress, Container, makeStyles } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  makeStyles,
+} from "@material-ui/core";
 
 import AppBar from "../AppBar";
 import CardContent from "./cardContent";
@@ -11,20 +17,19 @@ import { useState } from "react";
 
 const useStyles = makeStyles(() => ({
   MainBox: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-  },
-  InnerBox: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "stretch",
   },
   Button: {
     flex: 1,
     padding: "10px",
     margin: "10px",
     borderRadius: 16,
+    width: "100%",
+  },
+  Progress: {
+    alignSelf: "center",
   },
 }));
 
@@ -52,10 +57,9 @@ function NewsContentShort({ searchKeyword }) {
     setIsDataFetched(true);
   }
 
-  function handleLoadMore(){
-    setRange(range+5);
+  function handleLoadMore() {
+    setRange(range + 5);
   }
-
 
   useEffect(() => {
     fetchData(searchKeyword, range);
@@ -65,21 +69,23 @@ function NewsContentShort({ searchKeyword }) {
     <>
       <AppBar />
       <Box className={styles.MainBox}>
-        <Box className={styles.InnerBox}>
-          {!isDataFetched ? <CircularProgress/>: (
-            <Container>
-              {data.map((val, index) => (
-                <CardContent
-                  textHeader={val["title"]}
-                  imageData={val["encoded_image"]}
-                  key={index}
-                  schemeId={val["schemeid"]}
-                />
-              ))}
-            </Container>
-          )}
-          <Button className={styles.Button} onClick={handleLoadMore}>Load More</Button>
-        </Box>
+        {!isDataFetched ? (
+          <CircularProgress className={styles.Progress} />
+        ) : (
+          <Container style={{ flex: 1 }}>
+            {data.map((val, index) => (
+              <CardContent
+                textHeader={val["title"]}
+                imageData={val["encoded_image"]}
+                key={index}
+                schemeId={val["schemeid"]}
+              />
+            ))}
+            <Button className={styles.Button} onClick={handleLoadMore}>
+              Load More
+            </Button>
+          </Container>
+        )}
       </Box>
     </>
   );
