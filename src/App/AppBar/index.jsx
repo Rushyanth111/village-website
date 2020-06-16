@@ -3,24 +3,24 @@ import {
   Box,
   Button,
   IconButton,
-  InputBase,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
-  fade,
   makeStyles,
 } from "@material-ui/core";
+
 import React, { useState } from "react";
 import { setIsSchemeSelected, setSearchKeyword } from "../Redux";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
 import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
-import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
 import { setGeography } from "../Redux/actions";
 import { useHistory } from "react-router-dom";
+
+import SearchBox from "./searchbox";
 
 const useStyles = makeStyles((theme) => ({
   AppBar: {
@@ -45,16 +45,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
-  },
-  SearchBox: {
-    flex: 1.5,
-    display: "flex",
-    backgroundColor: fade(theme.palette.common.black, 0.07),
-    borderRadius: 10,
-    width: "100%",
-  },
-  SearchInput: {
-    flex: 1,
   },
   GeographyButton: {
     padding: 2,
@@ -83,14 +73,6 @@ function NavigationAppBar({
     }
   }
 
-  function onSearchHandler(event) {
-    var e = event.target.value;
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => {
-      searchKeyword(e);
-    }, 1000);
-  }
-
   function onChangeGeophraphy(event) {
     setAnchorEl(event.currentTarget);
     setMenuOpen(true);
@@ -116,16 +98,7 @@ function NavigationAppBar({
             Government Schemes
           </Typography>
         </Box>
-        <Box className={styles.SearchBox}>
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
-          <InputBase
-            placeholder="Search..."
-            className={styles.SearchInput}
-            onInput={onSearchHandler}
-          />
-        </Box>
+        <SearchBox />
         <Box className={styles.Spacer}></Box>
         <Button onClick={onChangeGeophraphy} className={styles.GeographyButton}>
           {geography}
