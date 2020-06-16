@@ -1,14 +1,17 @@
 import {
   AppBar,
   Box,
+  Button,
   IconButton,
   InputBase,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
   fade,
   makeStyles,
 } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { setIsSchemeSelected, setSearchKeyword } from "../Redux";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
@@ -16,7 +19,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
-import loadjs from "loadjs";
+import { setGeography } from "../Redux/actions";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,16 +56,25 @@ const useStyles = makeStyles((theme) => ({
   SearchInput: {
     flex: 1,
   },
+  GeographyButton: {
+    padding: 2,
+    margin: 10,
+  },
 }));
 
 function NavigationAppBar({
   isSchemeSelected,
   searchKeyword,
   setIsSchemeSelected,
+  geography,
+  setGeography,
 }) {
   const styles = useStyles();
   const history = useHistory();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   var searchTimer = 0;
+
   function onClickHandler() {
     if (isSchemeSelected) {
       setIsSchemeSelected(false);
@@ -73,16 +85,25 @@ function NavigationAppBar({
 
   function onSearchHandler(event) {
     var e = event.target.value;
-
     clearTimeout(searchTimer);
-
     searchTimer = setTimeout(() => {
       searchKeyword(e);
     }, 1000);
   }
 
-  useEffect(() => {
-  }, []);
+  function onChangeGeophraphy(event) {
+    setAnchorEl(event.currentTarget);
+    setMenuOpen(true);
+  }
+
+  function onChangeGeophraphySubIndia() {
+    setGeography("India");
+    setMenuOpen(false);
+  }
+  function onChangeGeophraphySubKarnataka() {
+    setGeography("Karnataka");
+    setMenuOpen(false);
+  }
 
   return (
     <AppBar position="sticky" color="default" className={styles.AppBar}>
@@ -106,6 +127,15 @@ function NavigationAppBar({
           />
         </Box>
         <Box className={styles.Spacer}></Box>
+        <Button onClick={onChangeGeophraphy} className={styles.GeographyButton}>
+          {geography}
+        </Button>
+        <Menu open={menuOpen} anchorEl={anchorEl}>
+          <MenuItem onClick={onChangeGeophraphySubKarnataka}>
+            Karnataka
+          </MenuItem>
+          <MenuItem onClick={onChangeGeophraphySubIndia}>India</MenuItem>
+        </Menu>
         <div id="google_translate_element" />
       </Toolbar>
     </AppBar>
@@ -116,11 +146,14 @@ NavigationAppBar.propTypes = {
   isSchemeSelected: PropTypes.bool,
   searchKeyword: PropTypes.func,
   setIsSchemeSelected: PropTypes.func,
+  geography: PropTypes.string,
+  setGeography: PropTypes.func,
 };
 
 function mapStateToProps(state) {
   return {
     isSchemeSelected: state.isSchemeSelected,
+    geography: state.geography,
   };
 }
 
@@ -128,6 +161,7 @@ function mapDispatchToProps(dispatch) {
   return {
     searchKeyword: (keyword) => dispatch(setSearchKeyword(keyword)),
     setIsSchemeSelected: (val) => dispatch(setIsSchemeSelected(val)),
+    setGeography: (val) => dispatch(setGeography(val)),
   };
 }
 

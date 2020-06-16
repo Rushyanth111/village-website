@@ -18,4 +18,11 @@ function setSearchKeyword(searchKeyword) {
   };
 }
 
-export { setScheme, setIsSchemeSelected, setSearchKeyword };
+function setGeography(geophraphy) {
+  return {
+    type: "SET_GEO",
+    value: geophraphy,
+  };
+}
+
+export { setScheme, setIsSchemeSelected, setSearchKeyword, setGeography };
