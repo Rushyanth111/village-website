@@ -9,7 +9,6 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-
 import React, { useState } from "react";
 import { setIsSchemeSelected, setSearchKeyword } from "../Redux";
 
@@ -17,7 +16,6 @@ import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
 import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setGeography } from "../Redux/actions";
 import { useHistory } from "react-router-dom";
 
 import SearchBox from "./searchbox";
@@ -42,13 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
   Spacer: {
     flex: 1,
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  },
-  GeographyButton: {
-    padding: 2,
-    margin: 10,
   },
 }));
 
@@ -56,8 +47,6 @@ function NavigationAppBar({
   isSchemeSelected,
   searchKeyword,
   setIsSchemeSelected,
-  geography,
-  setGeography,
 }) {
   const styles = useStyles();
   const history = useHistory();
@@ -83,7 +72,7 @@ function NavigationAppBar({
           </Typography>
         </Box>
         <SearchBox />
-        <Box className={styles.Spacer}></Box>
+        <div className={styles.Spacer} />
         <div id="google_translate_element" />
       </Toolbar>
     </AppBar>
@@ -92,24 +81,18 @@ function NavigationAppBar({
 
 NavigationAppBar.propTypes = {
   isSchemeSelected: PropTypes.bool,
-  searchKeyword: PropTypes.func,
   setIsSchemeSelected: PropTypes.func,
-  geography: PropTypes.string,
-  setGeography: PropTypes.func,
 };
 
 function mapStateToProps(state) {
   return {
     isSchemeSelected: state.isSchemeSelected,
-    geography: state.geography,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    searchKeyword: (keyword) => dispatch(setSearchKeyword(keyword)),
     setIsSchemeSelected: (val) => dispatch(setIsSchemeSelected(val)),
-    setGeography: (val) => dispatch(setGeography(val)),
   };
 }
 

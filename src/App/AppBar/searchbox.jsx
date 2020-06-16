@@ -12,11 +12,10 @@ import { connect } from "react-redux";
 import { setSearchKeyword } from "../Redux";
 const useStyles = makeStyles((theme) => ({
   SearchBox: {
-    flex: 1.5,
+    flex: 1,
     display: "flex",
-    backgroundColor: fade(theme.palette.common.black, 0.07),
+    backgroundColor: fade(theme.palette.common.black, 0.12),
     borderRadius: 10,
-    width: "100%",
   },
   SearchInput: {
     flex: 1,
@@ -26,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 function SearchBox({ setSearchKeyword }) {
   const styles = useStyles();
   var searchTimer = 0;
+
   function onSearchHandler(event) {
     var e = event.target.value;
     clearTimeout(searchTimer);
