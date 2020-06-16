@@ -48,8 +48,8 @@ function CardContent({
   function onClickHandler() {
     setIsSchemeSelected(true);
     setScheme(schemeId);
-    history.push("/schemeDetails");
     setNullKeywordSearch();
+    history.push("/schemeDetails");
   }
 
   return (
