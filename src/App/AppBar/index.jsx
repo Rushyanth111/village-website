@@ -1,16 +1,13 @@
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import React, { useState } from "react";
-import { setIsSchemeSelected, setSearchKeyword } from "../Redux";
+import React from "react";
+import { setSchemeSelected} from "../Redux";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -21,10 +18,6 @@ import { useHistory } from "react-router-dom";
 import SearchBox from "./searchbox";
 
 const useStyles = makeStyles((theme) => ({
-  AppBar: {
-    backgroundColor: "white",
-    width: "100%",
-  },
   Toolbar: {
     display: "flex",
     flexDirection: "row",
@@ -45,22 +38,22 @@ const useStyles = makeStyles((theme) => ({
 
 function NavigationAppBar({
   isSchemeSelected,
-  searchKeyword,
-  setIsSchemeSelected,
+  setSchemeSelected,
 }) {
   const styles = useStyles();
   const history = useHistory();
   var searchTimer = 0;
 
   function onClickHandler() {
-    if (isSchemeSelected) {
-      setIsSchemeSelected(false);
+    if (isSchemeSelected) { //If the Scheme is selected, do not show them the options, send them back.
+      setSchemeSelected(false);
       history.goBack();
     }
+    //Else Open the Menu Here.
   }
 
   return (
-    <AppBar position="sticky" color="default" className={styles.AppBar}>
+    <AppBar position="sticky" color="default">
       <Toolbar className={styles.Toolbar}>
         <Box className={styles.MenuAndTypography}>
           <IconButton edge="start" onClick={onClickHandler}>
@@ -91,7 +84,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setIsSchemeSelected: (val) => dispatch(setIsSchemeSelected(val)),
+    setSchemeSelected: (val) => dispatch(setSchemeSelected(val)),
   };
 }
 

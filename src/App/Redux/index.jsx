@@ -1,5 +1,5 @@
-import { setIsSchemeSelected, setScheme, setSearchKeyword } from "./actions";
+import { setSchemeSelected, setScheme, setSearchKeyword } from "./actions";
 
 import rootReducer from "./redux";
 
-export { rootReducer, setScheme, setIsSchemeSelected, setSearchKeyword };
+export { rootReducer, setScheme, setSchemeSelected, setSearchKeyword };

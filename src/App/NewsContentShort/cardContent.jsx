@@ -1,6 +1,6 @@
 import { Card, Typography, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
-import { setIsSchemeSelected, setScheme, setSearchKeyword } from "../Redux";
+import { setSchemeSelected, setScheme, setSearchKeyword } from "../Redux";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -38,7 +38,7 @@ function CardContent({
   imageData,
   schemeId,
   setScheme,
-  setIsSchemeSelected,
+  setSchemeSelected,
   setNullKeywordSearch,
 }) {
   const styles = useStyles();
@@ -46,7 +46,7 @@ function CardContent({
   const [elevation, setElevation] = useState(6);
 
   function onClickHandler() {
-    setIsSchemeSelected(true);
+    setSchemeSelected(true);
     setScheme(schemeId);
     setNullKeywordSearch();
     history.push("/schemeDetails");
@@ -82,15 +82,15 @@ CardContent.propTypes = {
   imageData: PropTypes.string,
   schemeId: PropTypes.number,
   setScheme: PropTypes.func,
-  setIsSchemeSelected: PropTypes.func,
+  setSchemeSelected: PropTypes.func,
   setNullKeywordSearch: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     setScheme: (schemeValue) => dispatch(setScheme(schemeValue)),
-    setIsSchemeSelected: (isSchemeSelected) =>
-      dispatch(setIsSchemeSelected(isSchemeSelected)),
+    setSchemeSelected: (isSchemeSelected) =>
+      dispatch(setSchemeSelected(isSchemeSelected)),
     setNullKeywordSearch: () => dispatch(setSearchKeyword("")),
   };
 }

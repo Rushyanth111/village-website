@@ -4,7 +4,7 @@ function setScheme(schemeValue) {
     value: schemeValue,
   };
 }
-function setIsSchemeSelected(isSchemeSelected) {
+function setSchemeSelected(isSchemeSelected) {
   return {
     type: "SET_IS_SCHEME_SELECTED",
     value: isSchemeSelected,
@@ -25,4 +25,4 @@ function setGeography(geophraphy) {
   };
 }
 
-export { setScheme, setIsSchemeSelected, setSearchKeyword, setGeography };
+export { setScheme, setSchemeSelected, setSearchKeyword, setGeography };
