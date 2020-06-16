@@ -61,8 +61,6 @@ function NavigationAppBar({
 }) {
   const styles = useStyles();
   const history = useHistory();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   var searchTimer = 0;
 
   function onClickHandler() {
@@ -71,20 +69,6 @@ function NavigationAppBar({
       searchKeyword("");
       history.goBack();
     }
-  }
-
-  function onChangeGeophraphy(event) {
-    setAnchorEl(event.currentTarget);
-    setMenuOpen(true);
-  }
-
-  function onChangeGeophraphySubIndia() {
-    setGeography("India");
-    setMenuOpen(false);
-  }
-  function onChangeGeophraphySubKarnataka() {
-    setGeography("Karnataka");
-    setMenuOpen(false);
   }
 
   return (
@@ -100,15 +84,6 @@ function NavigationAppBar({
         </Box>
         <SearchBox />
         <Box className={styles.Spacer}></Box>
-        <Button onClick={onChangeGeophraphy} className={styles.GeographyButton}>
-          {geography}
-        </Button>
-        <Menu open={menuOpen} anchorEl={anchorEl}>
-          <MenuItem onClick={onChangeGeophraphySubKarnataka}>
-            Karnataka
-          </MenuItem>
-          <MenuItem onClick={onChangeGeophraphySubIndia}>India</MenuItem>
-        </Menu>
         <div id="google_translate_element" />
       </Toolbar>
     </AppBar>
