@@ -6,7 +6,7 @@ const server = jsonserver.create();
 server.use(jsonserver.bodyParser);
 server.use(middlewares);
 
-const timeoutValue = 3000;
+const timeoutValue = 500;
 
 
 const imageDataSample =

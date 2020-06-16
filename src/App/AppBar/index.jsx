@@ -8,14 +8,15 @@ import {
   fade,
   makeStyles,
 } from "@material-ui/core";
+import React, { useEffect } from "react";
 import { setIsSchemeSelected, setSearchKeyword } from "../Redux";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
 import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
-import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
+import loadjs from "loadjs";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,6 +66,7 @@ function NavigationAppBar({
   function onClickHandler() {
     if (isSchemeSelected) {
       setIsSchemeSelected(false);
+      searchKeyword("");
       history.goBack();
     }
   }
@@ -78,6 +80,9 @@ function NavigationAppBar({
       searchKeyword(e);
     }, 1000);
   }
+
+  useEffect(() => {
+  }, []);
 
   return (
     <AppBar position="sticky" color="default" className={styles.AppBar}>
@@ -101,6 +106,7 @@ function NavigationAppBar({
           />
         </Box>
         <Box className={styles.Spacer}></Box>
+        <div id="google_translate_element" />
       </Toolbar>
     </AppBar>
   );
@@ -115,7 +121,6 @@ NavigationAppBar.propTypes = {
 function mapStateToProps(state) {
   return {
     isSchemeSelected: state.isSchemeSelected,
-    searchKeyword: state.searchKeyword,
   };
 }
 

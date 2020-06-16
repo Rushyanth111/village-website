@@ -1,7 +1,6 @@
 import { Box, Card, LinearProgress, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
-import AppBar from "../AppBar";
 import ProcessLongComponent from "./ProcessContent";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -59,7 +58,6 @@ function NewsContentLong({ schemeSelected }) {
   return (
     <React.Fragment>
       {!isDataFetched && <LinearProgress />}
-      <AppBar />
       <Box className={styles.OuterBox}>
         <Card className={styles.CardBox}>
           {isDataFetched && <ProcessLongComponent jsonData={data} />}

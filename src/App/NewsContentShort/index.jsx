@@ -6,7 +6,6 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-import AppBar from "../AppBar";
 import CardContent from "./cardContent";
 import PropTypes from "prop-types";
 import React from "react";
@@ -67,7 +66,6 @@ function NewsContentShort({ searchKeyword }) {
 
   return (
     <>
-      <AppBar />
       <Box className={styles.MainBox}>
         {!isDataFetched ? (
           <CircularProgress className={styles.Progress} />
