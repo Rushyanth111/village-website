@@ -55,7 +55,6 @@ function NavigationAppBar({
   function onClickHandler() {
     if (isSchemeSelected) {
       setIsSchemeSelected(false);
-      searchKeyword("");
       history.goBack();
     }
   }
