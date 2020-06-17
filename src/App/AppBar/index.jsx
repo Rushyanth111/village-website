@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import SearchBox from "./searchbox";
 import { connect } from "react-redux";
+import { setMenuBar } from "../Redux/actions";
 import { setSchemeSelected } from "../Redux";
 import { useHistory } from "react-router-dom";
 
@@ -43,7 +44,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavigationAppBar({ isSchemeSelected, setSchemeSelected }) {
+function NavigationAppBar({
+  isSchemeSelected,
+  setSchemeSelected,
+  setMenuOpen,
+}) {
   const styles = useStyles();
   const history = useHistory();
 
@@ -53,7 +58,7 @@ function NavigationAppBar({ isSchemeSelected, setSchemeSelected }) {
       setSchemeSelected(false);
       history.goBack();
     }
-    //Else Open the Menu Here.
+    setMenuOpen();
   }
 
   return (
@@ -78,6 +83,7 @@ function NavigationAppBar({ isSchemeSelected, setSchemeSelected }) {
 NavigationAppBar.propTypes = {
   isSchemeSelected: PropTypes.bool,
   setSchemeSelected: PropTypes.func,
+  setMenuOpen: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -89,6 +95,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setSchemeSelected: (val) => dispatch(setSchemeSelected(val)),
+    setMenuOpen: () => dispatch(setMenuBar(true)),
   };
 }
 
