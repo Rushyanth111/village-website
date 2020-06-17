@@ -32,7 +32,6 @@ function ProcessLongComponent({ jsonData }) {
       }
     }
   }
-
   return <>{components}</>;
 }
 

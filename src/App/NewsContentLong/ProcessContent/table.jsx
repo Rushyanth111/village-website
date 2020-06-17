@@ -2,20 +2,15 @@ import { Box, Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 
 import PropTypes from "prop-types";
 import React from "react";
-import ReactMarkdown from "react-markdown";
 
 function TableComponent({ TableData }) {
   const table = [];
-  TableData["data"].forEach((row) => {
+  TableData["data"].forEach((row, index) => {
     let rowData = [];
-    row.forEach((cell) => {
-      rowData.push(
-        <TableCell>
-          <ReactMarkdown source={cell} />
-        </TableCell>
-      );
+    row.forEach((cell, iindex) => {
+      rowData.push(<TableCell key={`${index}-${iindex}`}>{cell}</TableCell>);
     });
-    table.push(<TableRow>{rowData}</TableRow>);
+    table.push(<TableRow key={`row-${index}`}>{rowData}</TableRow>);
   });
 
   return (
