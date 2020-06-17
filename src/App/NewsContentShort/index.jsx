@@ -27,30 +27,30 @@ function NewsContentShort({ searchKeyword }) {
   const [data, setData] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [range, setRange] = useState(5);
-  async function fetchData(searchKeyword, range) {
-    setIsDataFetched(false);
-    var resp;
-    if (searchKeyword === undefined || searchKeyword === "") {
-      resp = await fetch(url + `list?range=${0}-${range}`, {
-        mode: "cors",
-      });
-    } else {
-      resp = await fetch(url + `search?phrase=${searchKeyword}`, {
-        mode: "cors",
-      });
-    }
-
-    resp = await resp.json();
-
-    setData(resp);
-    setIsDataFetched(true);
-  }
 
   function handleLoadMore() {
     setRange(range + 5);
   }
 
   useEffect(() => {
+    async function fetchData(searchKeyword, range) {
+      setIsDataFetched(false);
+      var resp;
+      if (searchKeyword === undefined || searchKeyword === "") {
+        resp = await fetch(url + `list?range=${0}-${range}`, {
+          mode: "cors",
+        });
+      } else {
+        resp = await fetch(url + `search?phrase=${searchKeyword}`, {
+          mode: "cors",
+        });
+      }
+
+      resp = await resp.json();
+
+      setData(resp);
+      setIsDataFetched(true);
+    }
     fetchData(searchKeyword, range);
   }, [searchKeyword, range]);
 
