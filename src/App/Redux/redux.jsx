@@ -3,6 +3,7 @@ const initialState = {
   selectedSchemeId: 0,
   searchKeyword: "",
   geography: "Karnataka",
+  isMenuOpen: false,
 };
 
 function rootReducer(state = initialState, action) {
@@ -22,6 +23,10 @@ function rootReducer(state = initialState, action) {
     case "SET_GEO":
       return Object.assign({}, state, {
         geography: action.value,
+      });
+    case "SET_MENU":
+      return Object.assign({}, state, {
+        isMenuOpen: action.value,
       });
     default:
       return state;

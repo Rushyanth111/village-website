@@ -25,4 +25,17 @@ function setGeography(geophraphy) {
   };
 }
 
-export { setScheme, setSchemeSelected, setSearchKeyword, setGeography };
+function setMenuBar(val) {
+  return {
+    type: "SET_MENU",
+    value: val,
+  };
+}
+
+export {
+  setScheme,
+  setSchemeSelected,
+  setSearchKeyword,
+  setGeography,
+  setMenuBar,
+};
