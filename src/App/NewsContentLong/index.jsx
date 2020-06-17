@@ -1,4 +1,4 @@
-import { Box, Card, LinearProgress, makeStyles } from "@material-ui/core";
+import { Card, LinearProgress, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
 import ProcessLongComponent from "./ProcessContent";
@@ -10,18 +10,12 @@ const useStyles = makeStyles((theme) => ({
   CardBox: {
     display: "flex",
     flexDirection: "column",
+    padding: "1rem",
     [theme.breakpoints.up("md")]: {
       marginTop: "4rem",
       maxWidth: "50%",
       margin: "auto",
     },
-  },
-  CardImage: {
-    display: "flex",
-    flex: 1,
-  },
-  CardContent: {
-    display: "flex",
   },
 }));
 
