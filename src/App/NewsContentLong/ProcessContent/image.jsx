@@ -5,6 +5,7 @@ function Image({ Image }) {
     <img
       src={Image}
       style={{ minWidth: 200, minHeight: 200, display: "flex" }}
+      alt=""
     />
   );
 }
