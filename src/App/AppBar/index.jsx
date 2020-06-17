@@ -32,18 +32,24 @@ const useStyles = makeStyles((theme) => ({
   },
   Spacer: {
     flex: 1,
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  TranslateButton: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
 }));
 
-function NavigationAppBar({
-  isSchemeSelected,
-  setSchemeSelected,
-}) {
+function NavigationAppBar({ isSchemeSelected, setSchemeSelected }) {
   const styles = useStyles();
   const history = useHistory();
 
   function onClickHandler() {
-    if (isSchemeSelected) { //If the Scheme is selected, do not show them the options, send them back.
+    if (isSchemeSelected) {
+      //If the Scheme is selected, do not show them the options, send them back.
       setSchemeSelected(false);
       history.goBack();
     }
@@ -57,13 +63,13 @@ function NavigationAppBar({
           <IconButton edge="start" onClick={onClickHandler}>
             {isSchemeSelected ? <ArrowBackTwoToneIcon /> : <MenuIcon />}
           </IconButton>
-          <Typography variant="h6" display="inline">
+          <Typography variant="h5" display="inline">
             Government Schemes
           </Typography>
         </Box>
         <SearchBox />
         <div className={styles.Spacer} />
-        <div id="google_translate_element" />
+        <div id="google_translate_element" className={styles.TranslateButton} />
       </Toolbar>
     </AppBar>
   );
