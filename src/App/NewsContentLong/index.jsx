@@ -7,24 +7,18 @@ import { connect } from "react-redux";
 import url from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
-  OuterBox: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "5%",
-  },
   CardBox: {
     display: "flex",
     flexDirection: "column",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
+      marginTop: "4rem",
       maxWidth: "50%",
+      margin: "auto",
     },
   },
   CardImage: {
     display: "flex",
-    minWidth: 200,
-    minHeight: 200,
+    flex: 1,
   },
   CardContent: {
     display: "flex",
@@ -32,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NewsContentLong({ schemeSelected }) {
+  const styles = useStyles();
   const [data, setData] = useState({});
   const [isDataFetched, setIsDataFetched] = useState(false);
 
@@ -54,15 +49,13 @@ function NewsContentLong({ schemeSelected }) {
     setIsDataFetched(true);
     fetchSomeData();
   }, [schemeSelected]);
-  const styles = useStyles();
+
   return (
     <React.Fragment>
       {!isDataFetched && <LinearProgress />}
-      <Box className={styles.OuterBox}>
-        <Card className={styles.CardBox}>
-          {isDataFetched && <ProcessLongComponent jsonData={data} />}
-        </Card>
-      </Box>
+      <Card className={styles.CardBox}>
+        {isDataFetched && <ProcessLongComponent jsonData={data} />}
+      </Card>
     </React.Fragment>
   );
 }
