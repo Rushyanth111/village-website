@@ -1,21 +1,23 @@
-import React from "react";
 import {
   Box,
   IconButton,
   InputBase,
-  makeStyles,
   fade,
+  makeStyles,
 } from "@material-ui/core";
+
+import PropTypes from "prop-types"
+import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
-
 import { setSearchKeyword } from "../Redux";
+
 const useStyles = makeStyles((theme) => ({
   SearchBox: {
     flex: 1,
     display: "flex",
-    backgroundColor: fade(theme.palette.common.black, 0.12),
-    borderRadius: 10,
+    backgroundColor: fade(theme.palette.common.black, 0.2),
+    borderRadius: "1rem"
   },
   SearchInput: {
     flex: 1,
@@ -46,6 +48,10 @@ function SearchBox({ setSearchKeyword }) {
       />
     </Box>
   );
+}
+
+SearchBox.propTypes = {
+  setSearchKeyword: PropTypes.func
 }
 
 function mapDispatchToProps(dispatch) {
