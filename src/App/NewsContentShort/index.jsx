@@ -33,8 +33,8 @@ function NewsContentShort({ searchKeyword }) {
   }
 
   useEffect(() => {
+    setIsDataFetched(false);
     async function fetchData(searchKeyword, range) {
-      setIsDataFetched(false);
       var resp;
       if (searchKeyword === undefined || searchKeyword === "") {
         resp = await fetch(url + `list?range=${0}-${range}`, {
@@ -49,8 +49,8 @@ function NewsContentShort({ searchKeyword }) {
       resp = await resp.json();
 
       setData(resp);
-      setIsDataFetched(true);
     }
+    setIsDataFetched(true);
     fetchData(searchKeyword, range);
   }, [searchKeyword, range]);
 

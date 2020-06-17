@@ -12,24 +12,15 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     padding: "10px",
     margin: "10px",
     borderRadius: 16,
   },
-  text: {
-    flex: 1,
-    padding: "10px",
-    alignItems: "left",
-    fontWeight: 500,
-  },
   image: {
-    alignSelf: "right",
     width: 100,
     height: 100,
-    borderRadius: 16,
-  },
-  cardHidden: {
-    display: "none",
+    borderRadius: 5,
   },
 }));
 
@@ -65,7 +56,7 @@ function CardContent({
       }}
       onClick={onClickHandler}
     >
-      <Typography variant="body1" display="block" className={styles.text}>
+      <Typography variant="h6" display="block" className={styles.text}>
         {textHeader.replace("# ", "")}
       </Typography>
       <img
