@@ -6,16 +6,15 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import React from "react";
-import { setSchemeSelected} from "../Redux";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
 import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-
+import React from "react";
 import SearchBox from "./searchbox";
+import { connect } from "react-redux";
+import { setSchemeSelected } from "../Redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   Toolbar: {
@@ -42,7 +41,6 @@ function NavigationAppBar({
 }) {
   const styles = useStyles();
   const history = useHistory();
-  var searchTimer = 0;
 
   function onClickHandler() {
     if (isSchemeSelected) { //If the Scheme is selected, do not show them the options, send them back.
@@ -73,7 +71,7 @@ function NavigationAppBar({
 
 NavigationAppBar.propTypes = {
   isSchemeSelected: PropTypes.bool,
-  setIsSchemeSelected: PropTypes.func,
+  setSchemeSelected: PropTypes.func,
 };
 
 function mapStateToProps(state) {

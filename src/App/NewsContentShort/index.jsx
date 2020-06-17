@@ -76,7 +76,7 @@ function NewsContentShort({ searchKeyword }) {
                 textHeader={val["title"]}
                 imageData={val["encoded_image"]}
                 key={index}
-                schemeId={val["schemeid"]}
+                schemeId={val["schemeId"]}
               />
             ))}
             {(searchKeyword === undefined || searchKeyword === "") && (

@@ -1,6 +1,6 @@
 import { Card, Typography, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
-import { setSchemeSelected, setScheme, setSearchKeyword } from "../Redux";
+import { setScheme, setSchemeSelected, setSearchKeyword } from "../Redux";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -46,8 +46,8 @@ function CardContent({
   const [elevation, setElevation] = useState(6);
 
   function onClickHandler() {
-    setSchemeSelected(true);
     setScheme(schemeId);
+    setSchemeSelected(true);
     setNullKeywordSearch();
     history.push("/schemeDetails");
   }
