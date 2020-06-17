@@ -1,34 +1,24 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  makeStyles,
-} from "@material-ui/core";
+import { Box, Button, CircularProgress, makeStyles } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 
 import CardContent from "./cardContent";
 import PropTypes from "prop-types";
-import React from "react";
 import { connect } from "react-redux";
 import url from "../../constants";
-import { useEffect } from "react";
-import { useState } from "react";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   MainBox: {
-    flex: 1,
     display: "flex",
     flexDirection: "column",
+    alignItems: "strech",
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "75%",
+      margin: "auto",
+    },
   },
   Button: {
     flex: 1,
-    padding: "10px",
-    margin: "10px",
     borderRadius: 16,
-    width: "100%",
-  },
-  Progress: {
-    alignSelf: "center",
   },
 }));
 
@@ -65,29 +55,23 @@ function NewsContentShort({ searchKeyword }) {
   }, [searchKeyword, range]);
 
   return (
-    <>
-      <Box className={styles.MainBox}>
-        {!isDataFetched ? (
-          <CircularProgress className={styles.Progress} />
-        ) : (
-          <Container style={{ flex: 1 }}>
-            {data.map((val, index) => (
-              <CardContent
-                textHeader={val["title"]}
-                imageData={val["encoded_image"]}
-                key={index}
-                schemeId={val["schemeId"]}
-              />
-            ))}
-            {(searchKeyword === undefined || searchKeyword === "") && (
-              <Button className={styles.Button} onClick={handleLoadMore}>
-                Load More
-              </Button>
-            )}
-          </Container>
-        )}
-      </Box>
-    </>
+    <Box className={styles.MainBox}>
+      {!isDataFetched ? (
+        <CircularProgress className={styles.Progress} />
+      ) : (
+        data.map((val, index) => (
+          <CardContent
+            textHeader={val["title"]}
+            imageData={val["encoded_image"]}
+            key={index}
+            schemeId={val["schemeId"]}
+          />
+        ))
+      )}
+      <Button className={styles.Button} onClick={handleLoadMore}>
+        Load More
+      </Button>
+    </Box>
   );
 }
 
