@@ -7,14 +7,21 @@ server.use(jsonserver.bodyParser);
 server.use(middlewares);
 
 const timeoutValue = 500;
-
+const regions = ["karnataka", "central-government"];
 const imageDataSample = image;
 
 server.get("/regions", (request, response) => {
-  return response.jsonp(["karnataka", "central-government"]);
+  return response.jsonp(regions);
 });
 
 server.get("/:id/list", (request, response) => {
+  if (
+    request.query.range === undefined ||
+    !regions.includes(request.param.id)
+  ) {
+    response.sendStatus(400);
+    return;
+  }
   const length = request.query.range.split("-");
   let resObjects = new Array();
 
@@ -32,6 +39,13 @@ server.get("/:id/list", (request, response) => {
 });
 
 server.get("/:id/search", (request, response) => {
+  if (
+    request.query.phrase === undefined ||
+    !regions.includes(request.param.id)
+  ) {
+    response.sendStatus(400);
+    return;
+  }
   let resObjects = new Array();
 
   for (let i = 0; i < 10; i++) {
@@ -47,6 +61,14 @@ server.get("/:id/search", (request, response) => {
 });
 
 server.get("/:id/content", (request, response) => {
+  if (
+    request.query.schemeId === undefined ||
+    !regions.includes(request.param.id)
+  ) {
+    response.sendStatus(400);
+    return;
+  }
+
   const finalObject = {
     "000-section": {
       "000-title": faker.lorem.lines(2),
