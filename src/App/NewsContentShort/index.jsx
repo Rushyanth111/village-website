@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewsContentShort({ searchKeyword }) {
+function NewsContentShort({ searchKeyword, geography }) {
   const styles = useStyles();
   const [data, setData] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
@@ -37,13 +37,16 @@ function NewsContentShort({ searchKeyword }) {
     async function fetchData(searchKeyword, range) {
       var resp;
       if (searchKeyword === undefined || searchKeyword === "") {
-        resp = await fetch(url + `list?range=${0}-${range}`, {
+        resp = await fetch(url + geography + `/list?range=${range}`, {
           mode: "cors",
         });
       } else {
-        resp = await fetch(url + `search?phrase=${searchKeyword}`, {
-          mode: "cors",
-        });
+        resp = await fetch(
+          url + geography + `/search?phrase=${searchKeyword}`,
+          {
+            mode: "cors",
+          }
+        );
       }
 
       resp = await resp.json();
@@ -52,7 +55,7 @@ function NewsContentShort({ searchKeyword }) {
     }
     setIsDataFetched(true);
     fetchData(searchKeyword, range);
-  }, [searchKeyword, range]);
+  }, [searchKeyword, range, geography]);
 
   return (
     <Box className={styles.MainBox}>
@@ -78,11 +81,13 @@ function NewsContentShort({ searchKeyword }) {
 function mapStateToProps(state) {
   return {
     searchKeyword: state.searchKeyword,
+    geography: state.geography,
   };
 }
 
 NewsContentShort.propTypes = {
   searchKeyword: PropTypes.string,
+  geography: PropTypes.string,
 };
 
 export default connect(mapStateToProps)(NewsContentShort);

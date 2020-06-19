@@ -56,8 +56,8 @@ function CardContent({
       }}
       onClick={onClickHandler}
     >
-      <Typography variant="h6" display="block" className={styles.text}>
-        {textHeader.replace("# ", "")}
+      <Typography variant="body1" display="block" className={styles.text}>
+        {textHeader}
       </Typography>
       <img
         className={styles.image}
@@ -71,7 +71,7 @@ function CardContent({
 CardContent.propTypes = {
   textHeader: PropTypes.string,
   imageData: PropTypes.string,
-  schemeId: PropTypes.number,
+  schemeId: PropTypes.string,
   setScheme: PropTypes.func,
   setSchemeSelected: PropTypes.func,
   setNullKeywordSearch: PropTypes.func,
