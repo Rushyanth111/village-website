@@ -1,24 +1,62 @@
+import {
+  List,
+  ListItem,
+  ListItemText,
+  SwipeableDrawer,
+} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+
 import PropTypes from "prop-types";
-import React from "react";
-import { SwipeableDrawer } from "@material-ui/core";
 import { connect } from "react-redux";
 import { setMenuBar } from "../Redux";
+import url from "../../constants";
 
-function MenuBar({ isMenuOpen, setMenuClose }) {
+function MenuBar({ isMenuOpen, setMenu }) {
+  const [data, setData] = useState([]);
+  const [dataAvailable, setDataAvailable] = useState(false);
+
   function handleOnMenuClose() {
-    setMenuClose();
+    setMenu(false);
   }
 
+  function handleOnMenuOpen() {
+    setMenu(true);
+  }
+
+  useEffect(() => {
+    async function getRegions() {
+      var res = await fetch(url + "regions");
+      res = await res.json();
+      console.log(res);
+      setData(res);
+      setDataAvailable(true);
+    }
+    getRegions();
+  }, []);
+
   return (
-    <SwipeableDrawer open={isMenuOpen} onClose={handleOnMenuClose}>
-      HAHAHA
+    <SwipeableDrawer
+      open={isMenuOpen}
+      onClose={handleOnMenuClose}
+      onOpen={handleOnMenuOpen}
+    >
+      <List component="nav">
+        {dataAvailable &&
+          data.map((ele, index) => {
+            return (
+              <ListItem key={index} button>
+                <ListItemText primary={ele} />
+              </ListItem>
+            );
+          })}
+      </List>
     </SwipeableDrawer>
   );
 }
 
 MenuBar.propTypes = {
   isMenuOpen: PropTypes.bool,
-  setMenuClose: PropTypes.func,
+  setMenu: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -29,7 +67,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setMenuClose: () => dispatch(setMenuBar(false)),
+    setMenu: (val) => dispatch(setMenuBar(val)),
   };
 }
 
