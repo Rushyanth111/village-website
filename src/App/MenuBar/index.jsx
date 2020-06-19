@@ -25,6 +25,7 @@ function MenuBar({ isMenuOpen, setMenu, setGeography }) {
 
   function handleOnClick(index) {
     setGeography(data[index]);
+    handleOnMenuClose();
   }
   useEffect(() => {
     async function getRegions() {
