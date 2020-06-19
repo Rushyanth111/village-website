@@ -5,13 +5,13 @@ import {
   SwipeableDrawer,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import { setGeography, setMenuBar } from "../Redux";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setMenuBar } from "../Redux";
 import url from "../../constants";
 
-function MenuBar({ isMenuOpen, setMenu }) {
+function MenuBar({ isMenuOpen, setMenu, setGeography }) {
   const [data, setData] = useState([]);
   const [dataAvailable, setDataAvailable] = useState(false);
 
@@ -23,6 +23,9 @@ function MenuBar({ isMenuOpen, setMenu }) {
     setMenu(true);
   }
 
+  function handleOnClick(index) {
+    setGeography(data[index]);
+  }
   useEffect(() => {
     async function getRegions() {
       var res = await fetch(url + "regions");
@@ -44,7 +47,13 @@ function MenuBar({ isMenuOpen, setMenu }) {
         {dataAvailable &&
           data.map((ele, index) => {
             return (
-              <ListItem key={index} button>
+              <ListItem
+                key={index}
+                button
+                onClick={() => {
+                  handleOnClick(index);
+                }}
+              >
                 <ListItemText primary={ele} />
               </ListItem>
             );
@@ -57,6 +66,7 @@ function MenuBar({ isMenuOpen, setMenu }) {
 MenuBar.propTypes = {
   isMenuOpen: PropTypes.bool,
   setMenu: PropTypes.func,
+  setGeography: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -68,6 +78,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setMenu: (val) => dispatch(setMenuBar(val)),
+    setGeography: (val) => dispatch(setGeography(val)),
   };
 }
 

@@ -1,4 +1,5 @@
 import {
+  setGeography,
   setMenuBar,
   setScheme,
   setSchemeSelected,
@@ -13,4 +14,5 @@ export {
   setSchemeSelected,
   setSearchKeyword,
   setMenuBar,
+  setGeography,
 };
