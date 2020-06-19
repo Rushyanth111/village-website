@@ -2,7 +2,7 @@ const initialState = {
   isSchemeSelected: false,
   selectedSchemeId: 0,
   searchKeyword: "",
-  geography: "Karnataka",
+  geography: "karnataka",
   isMenuOpen: false,
 };
 
