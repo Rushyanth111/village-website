@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewsContentLong({ schemeSelected }) {
+function NewsContentLong({ schemeSelected, geography }) {
   const styles = useStyles();
   const [data, setData] = useState({});
   const [isDataFetched, setIsDataFetched] = useState(false);
@@ -27,22 +27,21 @@ function NewsContentLong({ schemeSelected }) {
   useEffect(() => {
     setIsDataFetched(false);
     async function fetchSomeData() {
-      var resp = await fetch(url + "content", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          schemeId: `${schemeSelected}`,
-        }),
-      });
+      var resp = await fetch(
+        url + geography + "/content" + "?schemeId=" + schemeSelected,
+        {
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       resp = await resp.json(resp);
       setData(resp);
     }
     setIsDataFetched(true);
     fetchSomeData();
-  }, [schemeSelected]);
+  }, [schemeSelected, geography]);
 
   return (
     <React.Fragment>
@@ -56,11 +55,13 @@ function NewsContentLong({ schemeSelected }) {
 
 NewsContentLong.propTypes = {
   schemeSelected: PropTypes.number,
+  geography: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
     schemeSelected: state.selectedSchemeId,
+    geography: state.geography,
   };
 }
 
