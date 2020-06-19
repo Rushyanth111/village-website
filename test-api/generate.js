@@ -17,7 +17,7 @@ server.get("/regions", (request, response) => {
 server.get("/:id/list", (request, response) => {
   if (
     request.query.range === undefined ||
-    !regions.includes(request.param.id)
+    regions.includes(request.param.id)
   ) {
     response.sendStatus(400);
     return;
@@ -41,7 +41,7 @@ server.get("/:id/list", (request, response) => {
 server.get("/:id/search", (request, response) => {
   if (
     request.query.phrase === undefined ||
-    !regions.includes(request.param.id)
+    regions.includes(request.param.id)
   ) {
     response.sendStatus(400);
     return;
@@ -63,7 +63,7 @@ server.get("/:id/search", (request, response) => {
 server.get("/:id/content", (request, response) => {
   if (
     request.query.schemeId === undefined ||
-    !regions.includes(request.param.id)
+    regions.includes(request.param.id)
   ) {
     response.sendStatus(400);
     return;
