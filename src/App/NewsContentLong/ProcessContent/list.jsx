@@ -12,7 +12,7 @@ function ListComponent({ value, searchKeyword }) {
 
   return (
     <Typography component={"span"}>
-      <ReactMarkdown source={hval} escapeHtml={false} />
+      <ReactMarkdown source={searchKeyword ? hval : value} escapeHtml={false} />
     </Typography>
   );
 }

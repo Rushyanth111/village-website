@@ -5,6 +5,7 @@ import ProcessLongComponent from "./ProcessContent";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import url from "../../constants";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   CardBox: {
@@ -42,6 +43,10 @@ function NewsContentLong({ schemeSelected, geography }) {
     fetchSomeData();
     setIsDataFetched(true);
   }, [schemeSelected, geography]);
+
+  if (schemeSelected === 0) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <React.Fragment>
