@@ -1,18 +1,31 @@
 import PropTypes from "prop-types";
 import React from "react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown/with-html";
 import { Typography } from "@material-ui/core";
+import { connect } from "react-redux";
 
-function ListComponent({ value }) {
+function ListComponent({ value, searchKeyword }) {
+  const rexp = new RegExp("(" + searchKeyword.split(" ").join("|") + ")");
+  const hval = value.replace(rexp, function (a, b) {
+    return `<span style="background-color: #FFFF00">${b}</span>`;
+  });
+
   return (
     <Typography component={"span"}>
-      <ReactMarkdown source={value} />
+      <ReactMarkdown source={hval} escapeHtml={false} />
     </Typography>
   );
 }
 
 ListComponent.propTypes = {
   value: PropTypes.string,
+  searchKeyword: PropTypes.string,
 };
 
-export default ListComponent;
+function mapStateToProps(state) {
+  return {
+    searchKeyword: state.searchKeyword,
+  };
+}
+
+export default connect(mapStateToProps)(ListComponent);

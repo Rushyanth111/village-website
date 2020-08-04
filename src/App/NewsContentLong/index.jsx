@@ -25,7 +25,6 @@ function NewsContentLong({ schemeSelected, geography }) {
   const [isDataFetched, setIsDataFetched] = useState(false);
 
   useEffect(() => {
-    setIsDataFetched(false);
     async function fetchSomeData() {
       var resp = await fetch(
         url + geography + "/content" + "?schemeId=" + schemeSelected,
@@ -39,8 +38,9 @@ function NewsContentLong({ schemeSelected, geography }) {
       resp = await resp.json(resp);
       setData(resp);
     }
-    setIsDataFetched(true);
+    setIsDataFetched(false);
     fetchSomeData();
+    setIsDataFetched(true);
   }, [schemeSelected, geography]);
 
   return (
@@ -54,7 +54,7 @@ function NewsContentLong({ schemeSelected, geography }) {
 }
 
 NewsContentLong.propTypes = {
-  schemeSelected: PropTypes.number,
+  schemeSelected: <PropTypes className="string"></PropTypes>,
   geography: PropTypes.string,
 };
 
@@ -62,6 +62,7 @@ function mapStateToProps(state) {
   return {
     schemeSelected: state.selectedSchemeId,
     geography: state.geography,
+    searchKeyword: state.searchKeyword,
   };
 }
 
