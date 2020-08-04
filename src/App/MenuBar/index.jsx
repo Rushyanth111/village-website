@@ -55,7 +55,9 @@ function MenuBar({ isMenuOpen, setMenu, setGeography }) {
                   handleOnClick(index);
                 }}
               >
-                <ListItemText primary={ele} />
+                <ListItemText
+                  primary={ele.charAt(0).toUpperCase() + ele.slice(1)}
+                />
               </ListItem>
             );
           })}
